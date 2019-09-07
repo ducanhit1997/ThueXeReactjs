@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Icon, Drawer, Button, message } from 'antd';
-
+import FormAddUser from './formAddUser';
 class User extends Component {
     constructor(props) {
         super(props);
@@ -21,13 +21,24 @@ class User extends Component {
                     name: "Nguyễn Lê Phong",
                     phone: "0972541358",
                 },
-            ]
+            ],
+            formAddUser: false
         }
+    }
+    openFormAddUser = () => {
+        this.setState({
+            formAddUser: true,
+        });
+    };
+    onClose = () =>{
+        this.setState({
+            formAddUser: false
+        })
     }
     render() {
         return (
             <div>
-                <Button type="primary" style={{ margin: '0px 0px 5px 0px' }}><Icon type="plus" />Thêm</Button>
+                <Button type="primary" style={{ margin: '0px 0px 10px 0px' }} onClick={this.openFormAddUser}><Icon type="plus" />Thêm</Button>
                 <table class="table">
                     <thead>
                         <tr>
@@ -46,15 +57,24 @@ class User extends Component {
                                 <td>{item.name}</td>
                                 <td>{item.phone}</td>
                                 <td>
-                                    <Button onClick={() => { this.showFormEdit(item.id) }}>
-                                        <Icon type="info-circle" />
+                                    <Button>
+                                        <Icon type="delete" title='delete'/>
                                     </Button>
                                 </td>
                             </tr>
                         )}
                     </tbody>
                 </table>
-
+                <Drawer
+                    title="Thêm khách hàng"
+                    placement="right"
+                    closable={true}
+                    onClose={this.onClose}
+                    visible={this.state.formAddUser}
+                    width={350}
+                >
+                    <FormAddUser/>
+                </Drawer>
             </div>
         );
     }
