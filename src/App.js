@@ -6,10 +6,7 @@ import Home from './components/home/index';
 function App() {
   return (
     <div className="App">
-
-      <Home/>
       <Admin/>
-      
     </div>
   );
 }

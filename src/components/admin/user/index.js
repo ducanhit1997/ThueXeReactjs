@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import { Icon, Drawer, Button,Popconfirm, message } from 'antd';
+import { Icon, Drawer, Button, Popconfirm, message, notification } from 'antd';
 import FormAddUser from './formAddUser';
-function confirm(e) {
-    console.log(e);
-    message.success('Click on Yes');
-  }
-  
-  function cancel(e) {
-    console.log(e);
-    message.error('Click on No');
-  }
+import './style.css';
 class User extends Component {
     constructor(props) {
         super(props);
@@ -44,6 +36,31 @@ class User extends Component {
             formAddUser: false
         })
     }
+    addNewUser = (values) => {
+        var newUser = {
+            id: values.id,
+            name: values.name,
+            phone: values.phone
+        }
+        this.state.users.push(newUser);
+        notification.success({
+            message: 'Thêm thành công'
+        });
+        this.setState({
+            formAddUser: false
+        })
+    }
+     confirmDelete = (index) => { 
+       // alert(id)
+        var { users } = this.state;
+        users.splice(index,1);
+        this.setState({
+            users: users
+        })
+        notification.success({
+            message: 'Xóa thành công'
+        });
+    }
     render() {
         return (
             <div>
@@ -68,8 +85,7 @@ class User extends Component {
                                 <td>
                                     <Popconfirm
                                         title="Are you sure delete this task?"
-                                        onConfirm={confirm}
-                                        onCancel={cancel}
+                                        onConfirm={()=>this.confirmDelete(index)}
                                         okText="Yes"
                                         cancelText="No"
                                         style={{ color: 'red' }}
@@ -91,7 +107,7 @@ class User extends Component {
                     visible={this.state.formAddUser}
                     width={350}
                 >
-                    <FormAddUser />
+                    <FormAddUser addNewUser={this.addNewUser} />
                 </Drawer>
             </div>
         );
