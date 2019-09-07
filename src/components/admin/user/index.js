@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { Icon, Drawer, Button, message } from 'antd';
+import { Icon, Drawer, Button,Popconfirm, message } from 'antd';
 import FormAddUser from './formAddUser';
+function confirm(e) {
+    console.log(e);
+    message.success('Click on Yes');
+  }
+  
+  function cancel(e) {
+    console.log(e);
+    message.error('Click on No');
+  }
 class User extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +39,7 @@ class User extends Component {
             formAddUser: true,
         });
     };
-    onClose = () =>{
+    onClose = () => {
         this.setState({
             formAddUser: false
         })
@@ -57,9 +66,18 @@ class User extends Component {
                                 <td>{item.name}</td>
                                 <td>{item.phone}</td>
                                 <td>
-                                    <Button>
-                                        <Icon type="delete" title='delete'/>
-                                    </Button>
+                                    <Popconfirm
+                                        title="Are you sure delete this task?"
+                                        onConfirm={confirm}
+                                        onCancel={cancel}
+                                        okText="Yes"
+                                        cancelText="No"
+                                        style={{ color: 'red' }}
+                                    >
+                                        <Button>
+                                            <Icon type="delete" title='delete' />
+                                        </Button>
+                                    </Popconfirm>
                                 </td>
                             </tr>
                         )}
@@ -73,7 +91,7 @@ class User extends Component {
                     visible={this.state.formAddUser}
                     width={350}
                 >
-                    <FormAddUser/>
+                    <FormAddUser />
                 </Drawer>
             </div>
         );
