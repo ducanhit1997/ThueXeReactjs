@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon, Breadcrumb, Tag } from 'antd';
 import HeaderAdmin from './header/index';
-import User from './user/index';
+import User_Management from './users_management/index';
 import './style.css';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
-class Admin extends Component {
+class index extends Component {
     render() {
         return (
             <div>
-                <Layout>
+                 <Layout>
                     <Header className="header">
                        <HeaderAdmin/>
                     </Header>
                     <Layout>
-                        <Sider width={200} style={{ background: '#fff' }}>
+                        <Sider width={200}>
                             <Menu
                                 mode="inline"
                                 defaultSelectedKeys={['1']}
@@ -79,7 +79,7 @@ class Admin extends Component {
                                     minHeight: 280,
                                 }}
                             >
-                               <User/>
+                               <User_Management/>
                             </Content>
                         </Layout>
                     </Layout>
@@ -89,4 +89,4 @@ class Admin extends Component {
     }
 }
 
-export default Admin;
+export default index;

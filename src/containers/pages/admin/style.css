@@ -1,0 +1,15 @@
+.ant-layout-header{
+    background-color: cadetblue;
+}
+.ant-menu-horizontal {
+    margin-top: 6px;
+}
+.ant-layout-header {
+    border-bottom: 1px solid cadetblue;
+}
+.ant-menu-horizontal{
+    background-color: cadetblue;
+}
+.ant-layout-sider > ant-layout-sider-dark{
+    background-color: cadetblue !important;
+}

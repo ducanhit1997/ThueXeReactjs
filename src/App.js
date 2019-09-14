@@ -1,12 +1,24 @@
 import React from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
-import Admin from './components/admin/index';
-import Home from './components/home/index';
+import AdminPage from './containers/pages/admin/index';
+import ErrorPage from './containers/pages/404/index';
+import HomePage from './containers/pages/home/menu/index';
+import {
+  BrowserRouter,
+  Route,
+  Switch
+} from 'react-router-dom'
 function App() {
   return (
     <div className="App">
-      <Admin/>
+      <BrowserRouter>
+        <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/admin" component={AdminPage} />
+            <Route path="*" component={ErrorPage} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }

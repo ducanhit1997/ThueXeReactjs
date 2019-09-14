@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button } from 'antd';
-class formAddUser extends Component {
+import './style.css';
+class formEditUser extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userEdit: [],
+        }
+    }
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
-                this.props.addNewUser(values)
+                //console.log(values);
+                this.props.newData(values)
             }
         });
+        this.props.form.resetFields()
     };
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -19,22 +27,26 @@ class formAddUser extends Component {
                         {getFieldDecorator('id', {
                             rules: [
                                 { required: true, message: 'Vui lòng nhập id!' },
-                                { validator: this.checkUsernameExist }
+                                { validator: this.checkUsernameExist },
+
                             ],
+                            initialValue: this.props.editUser.id
                         })(
                             <Input
                                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                placeholder="ID"
-                            />,
+                                placeholder="ID" disabled 
+                            />
                         )}
                     </Form.Item>
                     <Form.Item>
                         {getFieldDecorator('name', {
                             rules: [{ required: true, message: 'Vui lòng nhập tên!' }],
+                            initialValue: this.props.editUser.name
                         })(
                             <Input
                                 prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                 placeholder="Nhập tên"
+                                value ={this.props.editUser.name}
                             />,
                         )}
                     </Form.Item>
@@ -45,10 +57,11 @@ class formAddUser extends Component {
                                     required: true, message: 'Vui lòng nhập số điện thoại!'
                                 },
                             ],
+                            initialValue: this.props.editUser.phone
                         })(
                             <Input
                                 prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                placeholder="Nhập số điện thoại"
+                                placeholder="Nhập số điện thoại" value={this.state.phone}
                             />,
                         )}
                     </Form.Item>
@@ -65,5 +78,5 @@ class formAddUser extends Component {
         );
     }
 }
-const WrappedNormalFormAddUser = Form.create({ name: 'normal_login' })(formAddUser);
+const WrappedNormalFormAddUser = Form.create({ name: 'normal_login' })(formEditUser);
 export default WrappedNormalFormAddUser;
