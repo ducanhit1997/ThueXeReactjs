@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Drawer, Button, Popconfirm, Pagination, notification } from 'antd';
+import { Icon, Drawer, Button, Popconfirm, Pagination, notification, Alert } from 'antd';
 import FormAddUser from './../form/formAddUser';
 import FormEditUser from './../form/formEditUser';
 import * as Types from './../const';
@@ -27,6 +27,9 @@ class index extends Component {
             formAddUser: false,
             formEditUser: false,
             dataEdit: [],
+            showMessageAddUser: false,
+            showMessageEditUser: false,
+            showMessageDeleteUser: false
         }
     }
     openFormAddUser = () => {
@@ -47,23 +50,29 @@ class index extends Component {
             phone: values.phone
         }
         this.state.users.push(newUser);
-        notification.success({
-            message: Types.MESSAGE_ADD_SUSCESS
-        });
         this.setState({
-            formAddUser: false
+            formAddUser: false,
+            showMessageAddUser: true
         })
+        setTimeout(() => {
+            this.setState({
+                showMessageAddUser: false
+            })
+        }, 3000);
     }
     confirmDelete = (index) => {
         // alert(id)
         var { users } = this.state;
         users.splice(index, 1);
         this.setState({
-            users: users
+            users: users,
+            showMessageDeleteUser: true
         })
-        notification.success({
-            message: Types.MESSAGE_DELETE_SUSCESS
-        });
+        setTimeout(() => {
+            this.setState({
+                showMessageDeleteUser: false
+            })
+        }, 3000);
     }
     editUser = (id) => {
         this.setState({
@@ -88,13 +97,31 @@ class index extends Component {
             }
         })
         this.setState({
-            formEditUser: false
+            formEditUser: false,
+            showMessageEditUser: true
         })
+        setTimeout(() => {
+            this.setState({
+                showMessageEditUser: false
+            })
+        }, 3000);
     }
     render() {
         return (
             <div>
-                <Button type="default" style={{ margin: '0px 0px 10px 0px' }} onClick={this.openFormAddUser}><Icon type="plus" />{Types.BUTTON_ADD_TITLE}</Button>                
+                {
+                    (this.state.showMessageAddUser) &&
+                    <Alert message={Types.MESSAGE_ADD_SUSCESS} type="success" showIcon />
+                }
+                {
+                    (this.state.showMessageEditUser) &&
+                    <Alert message={Types.MESSAGE_EDIT_SUSCESS} type="success" showIcon />
+                }
+                {
+                    (this.state.showMessageDeleteUser) &&
+                    <Alert message={Types.MESSAGE_DELETE_SUSCESS} type="success" showIcon />
+                }
+                <Button type="default" style={{ margin: '0px 0px 10px 0px' }} onClick={this.openFormAddUser}><Icon type="plus-square" theme="twoTone" />{Types.BUTTON_ADD_TITLE}</Button>
                 <table class="table">
                     <thead>
                         <tr>
@@ -114,7 +141,7 @@ class index extends Component {
                                 <td>{item.phone}</td>
                                 <td>
                                     <Button onClick={() => this.editUser(item.id)}>
-                                        <Icon type="edit" />
+                                        <Icon type="edit" theme="twoTone" />
                                     </Button>
                                     <Popconfirm
                                         title="Are you sure delete this task?"
@@ -124,7 +151,7 @@ class index extends Component {
                                         style={{ color: 'red' }}
                                     >
                                         <Button>
-                                            <Icon type="delete" />
+                                            <Icon type="delete" theme="twoTone" />
                                         </Button>
                                     </Popconfirm>
                                 </td>
@@ -133,7 +160,7 @@ class index extends Component {
                     </tbody>
                 </table>
                 <Drawer
-                    title= {Types.TITLE_FORM_ADD_USER}
+                    title={Types.TITLE_FORM_ADD_USER}
                     placement="right"
                     closable={true}
                     onClose={this.onClose}
@@ -143,7 +170,7 @@ class index extends Component {
                     <FormAddUser addNewUser={this.addNewUser} />
                 </Drawer>
                 <Drawer
-                    title= {Types.TITLE_FORM_EDIT_USER}
+                    title={Types.TITLE_FORM_EDIT_USER}
                     placement="right"
                     closable={true}
                     onClose={this.onClose}
