@@ -1,12 +1,4 @@
-.login__form--wrapper {
 
-    /* width: 1024px; */
-    height: 450px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    
-
-}
 .form_login--wrapper {
     padding-top: 5%;
     display: flex;
@@ -23,17 +15,13 @@
 .anticon :hover{
     background-color: green;
 }
-.login-form {
-    
-    width: 320px;
+.ant-form-item-control{
+    width: auto;
 }
 .login-form-forgot {
     float: right;
 }
 
-.login-form-button {
-    width: 100%;
-}
 .error_message {
     color: red;
     font-weight: bold;
@@ -50,7 +38,6 @@
     font-size: 20px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
-    
 }
 .navbar-nav {
     justify-content: center;
@@ -59,11 +46,7 @@
 .as{
     text-align: center;
 }
-.form-group{
-    margin-bottom: -3px !important;
-    margin-left: 5px;
-    margin-right: 5px;
-}
+
 .form-group1{
     margin-left: -16px;
     margin-top: 11px;

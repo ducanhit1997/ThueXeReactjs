@@ -23,7 +23,50 @@ class index extends Component {
                     name: "Nguyễn Lê Phong",
                     phone: "0972541358",
                 },
+                {
+                    id: "04",
+                    name: "Nguyễn Lê Phong",
+                    phone: "0972541358",
+                },
+                {
+                    id: "05",
+                    name: "Nguyễn Phúc Thịnh",
+                    phone: "0987124578",
+                },
+                {
+                    id: "06",
+                    name: "Nguyễn Lê Phong",
+                    phone: "0972541358",
+                },
+                {
+                    id: "07",
+                    name: "Dương Hồng Hà",
+                    phone: "09725413324",
+                },
+                {
+                    id: "08",
+                    name: "Phan Đức Thành",
+                    phone: "4564564244",
+                },
+                {
+                    id: "09",
+                    name: "Phan Văn An",
+                    phone: "09725413324",
+                },
+                {
+                    id: "10",
+                    name: "Dương Hà",
+                    phone: "09725413324",
+                },
+                {
+                    id: "12",
+                    name: "Dương Hồng",
+                    phone: "0972541724",
+                },
+               
             ],
+            currentPage: 1,
+            todosPerPage: 4,
             formAddUser: false,
             formEditUser: false,
             dataEdit: [],
@@ -106,7 +149,67 @@ class index extends Component {
             })
         }, 3000);
     }
+    handleClick(number) {
+        // this.setState({
+        //   currentPage: Number(event.target.id)
+        // });
+        //alert(number)
+        this.setState({
+            currentPage: number
+        })
+    }
+    onChangePage = (number) => {
+        //alert(number)
+    }
     render() {
+
+        const { users, currentPage, todosPerPage } = this.state;
+
+        const indexOfLastTodo = currentPage * todosPerPage;
+        const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+        const currentTodos = users.slice(indexOfFirstTodo, indexOfLastTodo);
+
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(users.length / todosPerPage); i++) {
+            pageNumbers.push(i);
+        }
+        const renderPageNumbers = pageNumbers.map(number => {
+            return (
+               
+                <li class="page-item" key={number} onClick={() => this.handleClick(number)}>
+                    <a class="page-link" href="#">
+                        {number}
+                    </a>
+                </li>
+            );
+        });
+
+        const renderListUser = currentTodos.map((item, index) => {
+            return (
+                <tr>
+                    <td>{index + 1}</td>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>{item.phone}</td>
+                    <td>
+                        <Button onClick={() => this.editUser(item.id)}>
+                            <Icon type="edit" theme="twoTone" />
+                        </Button>
+                        <Popconfirm
+                            title="Are you sure delete this task?"
+                            onConfirm={() => this.confirmDelete(index)}
+                            okText="Yes"
+                            cancelText="No"
+                            style={{ color: 'red' }}
+                        >
+                            <Button>
+                                <Icon type="delete" theme="twoTone" />
+                            </Button>
+                        </Popconfirm>
+                    </td>
+                </tr>
+            )
+        })
         return (
             <div>
                 {
@@ -121,6 +224,7 @@ class index extends Component {
                     (this.state.showMessageDeleteUser) &&
                     <Alert message={Types.MESSAGE_DELETE_SUSCESS} type="success" showIcon />
                 }
+                <br/>
                 <Button type="default" style={{ margin: '0px 0px 10px 0px' }} onClick={this.openFormAddUser}><Icon type="plus-square" theme="twoTone" />{Types.BUTTON_ADD_TITLE}</Button>
                 <table class="table">
                     <thead>
@@ -133,39 +237,22 @@ class index extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.users.map((item, index) =>
-                            <tr>
-                                <td>{index + 1}</td>
-                                <td>{item.id}</td>
-                                <td>{item.name}</td>
-                                <td>{item.phone}</td>
-                                <td>
-                                    <Button onClick={() => this.editUser(item.id)}>
-                                        <Icon type="edit" theme="twoTone" />
-                                    </Button>
-                                    <Popconfirm
-                                        title="Are you sure delete this task?"
-                                        onConfirm={() => this.confirmDelete(index)}
-                                        okText="Yes"
-                                        cancelText="No"
-                                        style={{ color: 'red' }}
-                                    >
-                                        <Button>
-                                            <Icon type="delete" theme="twoTone" />
-                                        </Button>
-                                    </Popconfirm>
-                                </td>
-                            </tr>
-                        )}
+                        {renderListUser}
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {renderPageNumbers}
+                    </ul>
+                </nav>
+                {/* <Pagination defaultCurrent={1} total={users.length} onChange={this.onChangePage()} /> */}
                 <Drawer
                     title={Types.TITLE_FORM_ADD_USER}
                     placement="right"
                     closable={true}
                     onClose={this.onClose}
                     visible={this.state.formAddUser}
-                    width={300}
+                    width={350}
                 >
                     <FormAddUser addNewUser={this.addNewUser} />
                 </Drawer>

@@ -7,7 +7,6 @@ class User extends Component {
         return (
             <div>
                 <TableData/>
-                <Pagination simple defaultCurrent={2} total={50} />
             </div>
         );
     }
