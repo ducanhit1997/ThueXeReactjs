@@ -12,6 +12,14 @@ class formAddUser extends Component {
             }
         });
     };
+    // checkIdExist = (rule, value, callback) => {
+    //     const form = this.props.form;
+    //     if (value && value == 1) {
+    //         callback('Id đã tồn tại trong hệ thống!');
+    //     } else {
+    //         callback();
+    //     }
+    // };
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
@@ -21,7 +29,7 @@ class formAddUser extends Component {
                         {getFieldDecorator('id', {
                             rules: [
                                 { required: true, message: 'Vui lòng nhập id!' },
-                                { validator: this.checkUsernameExist }
+                                // { validator: this.checkIdExist }
                             ],
                         })(
                             <Input
