@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Modal, Alert } from 'antd';
-
-import { Button, Dropdown, Menu } from 'semantic-ui-react';
+import { Modal, Button } from 'antd';
+import { Dropdown, Menu } from 'semantic-ui-react';
 import LoginForm from './../form/formLogin';
 import RegisterForm from './../form/formRegister';
+import Logo from './image/logo.png';
 import './style.css';
 class index extends Component {
-    state = { activeItem: 'home', showFormLogin: false, showFormRegister: false }
+    state = {
+        activeItem: 'home',
+        showFormLogin: false,
+        showFormRegister: false,
+    }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
     handleOk = e => {
@@ -23,7 +27,7 @@ class index extends Component {
             showFormLogin: false,
         });
     };
-    register = () =>{
+    register = () => {
         this.setState({
             showFormLogin: true
         })
@@ -39,7 +43,7 @@ class index extends Component {
         const { activeItem } = this.state
         return (
             <div>
-                <Menu size='tiny'>
+                <Menu size='tiny' >
                     {/* <Menu.Item
                         name='home'
                         active={activeItem === 'home'}
@@ -50,10 +54,21 @@ class index extends Component {
                         active={activeItem === 'messages'}
                         onClick={this.handleItemClick}
                     /> */}
-
+                    <Menu.Item>
+                        <img src={Logo} />
+                    </Menu.Item>
                     <Menu.Menu position='right' className="menu-right">
                         <Menu.Item>
-                            <Button primary onClick={this.register}>Đăng nhập</Button>
+                            <Button type="primary" onClick={this.register}>Trở thành đối tác</Button>
+                        </Menu.Item>
+                        <Menu.Item>
+                            <Link to="/admin">Đi đến trang admin</Link>
+                        </Menu.Item>
+                        <Menu.Item onClick={this.handleItemClick}>
+                            Hỗ trợ
+                        </Menu.Item>
+                        <Menu.Item onClick={this.handleItemClick}>
+                            Khuyến mãi
                         </Menu.Item>
                         <Dropdown item text='Language'>
                             <Dropdown.Menu>
@@ -84,7 +99,6 @@ class index extends Component {
                         <LoginForm loading={this.state.loading} onSubmitLogin={this.Login} showFormRegister={this.showFormRegister} />
                     }
                 </Modal>
-                <Link to="/admin">Đi đến trang admin</Link>
             </div>
         );
     }

@@ -1,6 +1,6 @@
 .table tbody {
     display: block;
-    max-height: 300px;
+    max-height: 290px;
     overflow-y: scroll;
   }
 .table thead, tbody tr {

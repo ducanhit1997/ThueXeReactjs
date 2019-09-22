@@ -96,10 +96,7 @@ class index extends Component {
             phone: values.phone
         }
         var { users } = this.state;
-        var index = users.findIndex(obj => obj.id === values.id);
-        if(index){
-            alert()
-        }
+       // var index = users.findIndex(obj => obj.id === values.id);
         this.state.users.push(newUser);
         this.setState({
             formAddUser: false,
@@ -258,7 +255,7 @@ class index extends Component {
                 </Drawer>
                 <Drawer
                     title={Types.TITLE_FORM_EDIT_USER}
-                    placement="right"
+                    placement="right"   
                     closable={true}
                     onClose={this.onClose}
                     visible={this.state.formEditUser}
