@@ -42,7 +42,7 @@ class Banner extends Component {
                         </div>
                     )}
                 </Carousel>
-                <FormOrder/>
+                {/* <FormOrder/> */}
             </div>
         );
     }

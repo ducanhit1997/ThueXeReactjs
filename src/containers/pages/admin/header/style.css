@@ -16,3 +16,6 @@
     border-bottom-color: white !important;
     box-shadow: none;
 }
+.ant-layout-header {
+    background: #fff !important;
+}

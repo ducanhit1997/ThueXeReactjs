@@ -1,23 +1,72 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon, Breadcrumb, Tag } from 'antd';
 import HeaderAdmin from './header/index';
-import User_Management from './users_management/index';
+import User_Management from './users_management/';
+import Question_Management from './question_management';
+import Contact_Management from './contact_management';
+import News_Management from './news_management';
+
 import './style.css';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 class index extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showListUser: true,
+            showListQuestion: false,
+            showListContact: false,
+            showListNews: false
+        }
+    }
+    handleClick = (e) => {
+        if (e.key === 'user') {
+            this.setState({
+                showListUser: true,
+                showListQuestion: false,
+                showListNews: false,
+                showListContact: false
+            })
+        }
+        if (e.key === 'question') {
+            this.setState({
+                showListUser: false,
+                showListNews: false,
+                showListQuestion: true,
+                showListContact: false
+            })
+        }
+        if (e.key === 'contact') {
+            this.setState({
+                showListUser: false,
+                showListQuestion: false,
+                showListNews: false,
+                showListContact: true
+            })
+        }
+        if (e.key === 'news') {
+            this.setState({
+                showListUser: false,
+                showListQuestion: false,
+                showListNews: true,
+                showListContact: false
+            })
+        }
+
+    }
     render() {
+        const { showListUser, showListQuestion, showListContact, showListNews } = this.state;
         return (
             <div>
-                 <Layout>
+                <Layout>
                     <Header className="header">
-                       <HeaderAdmin/>
+                        <HeaderAdmin />
                     </Header>
                     <Layout>
                         <Sider width={200}>
                             <Menu
                                 mode="inline"
-                                defaultSelectedKeys={['1']}
+                                defaultSelectedKeys={['user']}
                                 defaultOpenKeys={['sub1']}
                                 style={{ height: '100%', borderRight: 0 }}
                             >
@@ -29,11 +78,12 @@ class index extends Component {
                                             Quản lý
                                       </span>
                                     }
+                                    onClick={this.handleClick}
                                 >
-                                    <Menu.Item key="1">User</Menu.Item>
-                                    <Menu.Item key="2">XXX</Menu.Item>
-                                    <Menu.Item key="3">YYY</Menu.Item>
-                                    <Menu.Item key="4">ZZZ</Menu.Item>
+                                    <Menu.Item key="user">User</Menu.Item>
+                                    <Menu.Item key="question">Question</Menu.Item>
+                                    <Menu.Item key="contact">Contact</Menu.Item>
+                                    <Menu.Item key="news">News</Menu.Item>
                                 </SubMenu>
                                 <SubMenu
                                     key="sub2"
@@ -65,12 +115,29 @@ class index extends Component {
                                 </SubMenu>
                             </Menu>
                         </Sider>
-                        <Layout style={{ padding: '0 24px 24px' }}>
-                            <Breadcrumb style={{ margin: '16px 0' }}>
-                                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                                <Breadcrumb.Item>List</Breadcrumb.Item>
-                                <Breadcrumb.Item>App</Breadcrumb.Item>
-                            </Breadcrumb>
+                        <Layout style={{ padding: '0 24px 24px', fontWeight: '500' }}>
+                            {
+                                showListUser &&
+                                <Breadcrumb style={{ margin: '16px 0' }}>
+                                    <Breadcrumb.Item>Quản lý user</Breadcrumb.Item>
+                                </Breadcrumb>
+                            }
+                            {
+                                showListContact &&
+                                <Breadcrumb style={{ margin: '16px 0' }}>
+                                    <Breadcrumb.Item>Quản lý contact</Breadcrumb.Item>
+                                </Breadcrumb>
+                            } {
+                                showListNews &&
+                                <Breadcrumb style={{ margin: '16px 0' }}>
+                                    <Breadcrumb.Item>Quản lý tin tức</Breadcrumb.Item>
+                                </Breadcrumb>
+                            } {
+                                showListQuestion &&
+                                <Breadcrumb style={{ margin: '16px 0' }}>
+                                    <Breadcrumb.Item>Quản lý câu hỏi</Breadcrumb.Item>
+                                </Breadcrumb>
+                            }
                             <Content
                                 style={{
                                     background: '#fff',
@@ -79,7 +146,22 @@ class index extends Component {
                                     minHeight: 280,
                                 }}
                             >
-                               <User_Management/>
+                                {
+                                    showListUser &&
+                                    <User_Management />
+                                }
+                                {
+                                    showListQuestion &&
+                                    <Question_Management />
+                                }
+                                {
+                                    showListContact &&
+                                    <Contact_Management />
+                                }
+                                {
+                                    showListNews &&
+                                    <News_Management />
+                                }
                             </Content>
                         </Layout>
                     </Layout>
