@@ -7,7 +7,7 @@ class formLogin extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                this.props.onSubmitLogin(values.username, values.password)
+                this.props.onSubmitLogin(values.email, values.password)
             }
         });
     };
@@ -37,12 +37,12 @@ class formLogin extends Component {
                                 }
                             </Form.Item>
                             <Form.Item>
-                                {getFieldDecorator('username', {
-                                    rules: [{ required: true, message: 'Please input your username!' }],
+                                {getFieldDecorator('email', {
+                                    rules: [{ required: true, message: 'Please input your email!' }],
                                 })(
                                     <Input
                                         prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                        placeholder="Username"
+                                        placeholder="Email"
                                     />,
                                 )}
                             </Form.Item>

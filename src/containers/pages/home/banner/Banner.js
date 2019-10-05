@@ -5,6 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import banner1 from './image/banner1.jpg'
 import banner2 from './image/banner2.jpg'
 import banner3 from './image/banner3.png'
+import FormOrder from './../form/formOrder'
 class Banner extends Component {
     state = {
         listParner: [
@@ -41,6 +42,7 @@ class Banner extends Component {
                         </div>
                     )}
                 </Carousel>
+                <FormOrder/>
             </div>
         );
     }
