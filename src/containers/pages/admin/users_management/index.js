@@ -38,61 +38,50 @@ class index extends Component {
         })
     }
     addNewUser = (values) => {
-        console.log(values)
+        console.log( values.picture.file.name)
+        console.log( values.name)
+
         // this.setState({ loading: 'Vui lòng đợi....' });
         const getToken = localStorage.getItem("ACCESSTOKEN");
         callApi('admin/user?token=' + getToken, 'POST', {
             name: values.name,
             email: values.email,
             password: values.password,
-            picture: values.picture.file.name,
+            picture: values.picture,
             number_phone: values.number_phone,
             address: values.address
         }).then(res => {
+            var {users} = this.state;
+            users.push(values)
             this.setState({ loading: false, formAddUser: false })
             notification.success({
                 message: 'Thêm thành công'
             });
-
-            window.location.reload();
-
+           
         }).catch(e => {
             console.log(e.data)
         })
 
     }
 
-    confirmDelete = (id) => {
-        // var { users } = this.state;
-        // users.splice(index, 1);
-        // this.setState({
-        //     users: users,
-        //     showMessageDeleteUser: true
-        // })
-        // setTimeout(() => {
-        //     this.setState({
-        //         showMessageDeleteUser: false
-        //     })
-        // }, 3000);
-        // const getToken = localStorage.getItem("ACCESSTOKEN");
-        // callApi('admin/user?token=' +id, 'POST', {
-            
-        // }).then(res => {
-        //     const account = res.data;
-        //     console.log(res)
-
-        //     this.setState({ loading: false, formAddUser: false })
-        //     notification.success({
-        //         message: 'Thêm thành công'
-        //     });
-
-        //     window.location.reload();
-
-        // }).catch(e => {
-        //     console.log(e.data)
-        // })
+    confirmDelete = (id, index) => {
+       
+        const getToken = localStorage.getItem("ACCESSTOKEN");
+        callApi('admin/user/'+id+'?token='+ getToken, 'POST', {
+            _method: 'DELETE'
+        }).then(res => {
+            var {users} = this.state;
+            users.splice(index,1);
+            this.setState({users: users})
+            notification.success({
+                message: 'Xóa thành công'
+            });
+        }).catch(e => {
+            // console.log(e.data)
+        })
     }
     editUser = (id) => {
+        alert(id)
         this.setState({
             formEditUser: true
         })
@@ -158,7 +147,6 @@ class index extends Component {
             return (
                 <Table.Row>
                     <Table.Cell>{index + 1}</Table.Cell>
-                    <Table.Cell>{item.id}</Table.Cell>
                     <Table.Cell>{item.name}</Table.Cell>
                     <Table.Cell>{item.email}</Table.Cell>
                     <Table.Cell>{item.number_phone}</Table.Cell>
@@ -169,7 +157,7 @@ class index extends Component {
                         </Button>
                         <Popconfirm
                             title={Types.MESSAGE_CONFIRM_DELETE}
-                            onConfirm={() => this.confirmDelete(item.id)}
+                            onConfirm={() => this.confirmDelete(item.id, index)}
                             okText="Yes"
                             cancelText="No"
                             style={{ color: 'red' }}
@@ -209,7 +197,6 @@ class index extends Component {
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell>STT</Table.HeaderCell>
-                                <Table.HeaderCell>Id</Table.HeaderCell>
                                 <Table.HeaderCell>Tên</Table.HeaderCell>
                                 <Table.HeaderCell>Email</Table.HeaderCell>
                                 <Table.HeaderCell>SĐT</Table.HeaderCell>
