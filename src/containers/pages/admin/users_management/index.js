@@ -41,7 +41,7 @@ class index extends Component {
         console.log(values)
         // this.setState({ loading: 'Vui lòng đợi....' });
         const getToken = localStorage.getItem("ACCESSTOKEN");
-        callApi('admin/user?token='+getToken, 'POST', {
+        callApi('admin/user?token=' + getToken, 'POST', {
             name: values.name,
             email: values.email,
             password: values.password,
@@ -49,35 +49,48 @@ class index extends Component {
             number_phone: values.number_phone,
             address: values.address
         }).then(res => {
-            const account = res.data;
-            console.log(res)
+            this.setState({ loading: false, formAddUser: false })
+            notification.success({
+                message: 'Thêm thành công'
+            });
 
-            this.setState({loading: false })
-            // notification.success({
-            //     message: 'Thêm thành công'
-            // });
-        
-        //    window.location.reload();
+            window.location.reload();
 
         }).catch(e => {
             console.log(e.data)
         })
 
     }
-   
-    confirmDelete = (index) => {
-        // alert(id)
-        var { users } = this.state;
-        users.splice(index, 1);
-        this.setState({
-            users: users,
-            showMessageDeleteUser: true
-        })
-        setTimeout(() => {
-            this.setState({
-                showMessageDeleteUser: false
-            })
-        }, 3000);
+
+    confirmDelete = (id) => {
+        // var { users } = this.state;
+        // users.splice(index, 1);
+        // this.setState({
+        //     users: users,
+        //     showMessageDeleteUser: true
+        // })
+        // setTimeout(() => {
+        //     this.setState({
+        //         showMessageDeleteUser: false
+        //     })
+        // }, 3000);
+        // const getToken = localStorage.getItem("ACCESSTOKEN");
+        // callApi('admin/user?token=' +id, 'POST', {
+            
+        // }).then(res => {
+        //     const account = res.data;
+        //     console.log(res)
+
+        //     this.setState({ loading: false, formAddUser: false })
+        //     notification.success({
+        //         message: 'Thêm thành công'
+        //     });
+
+        //     window.location.reload();
+
+        // }).catch(e => {
+        //     console.log(e.data)
+        // })
     }
     editUser = (id) => {
         this.setState({
@@ -156,7 +169,7 @@ class index extends Component {
                         </Button>
                         <Popconfirm
                             title={Types.MESSAGE_CONFIRM_DELETE}
-                            onConfirm={() => this.confirmDelete(index)}
+                            onConfirm={() => this.confirmDelete(item.id)}
                             okText="Yes"
                             cancelText="No"
                             style={{ color: 'red' }}

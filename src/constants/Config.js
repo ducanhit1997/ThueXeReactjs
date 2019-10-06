@@ -1,3 +1,3 @@
-export const URL = 'http://localhost/Rental-vehicle/public/api/v1';
+export const URL = 'http://localhost/rental-vehicle/public/api/v1';
 
 
