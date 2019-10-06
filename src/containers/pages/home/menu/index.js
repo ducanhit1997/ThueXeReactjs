@@ -112,7 +112,7 @@ class index extends Component {
                 <Button type="primary" onClick={this.register}>Đăng nhập</Button>
               </Menu.Item>
             }
-            {(role === '1') &&
+            {(role === '0') &&
               <Menu.Item>
                 <Link to="/admin">Đi đến trang admin</Link>
               </Menu.Item>

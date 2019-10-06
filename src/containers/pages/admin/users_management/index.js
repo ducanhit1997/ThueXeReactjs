@@ -22,8 +22,7 @@ class index extends Component {
             showMessageEditUser: false,
             showMessageDeleteUser: false,
             dataFilter: '',
-            loading: true
-
+            loading: true,
         }
     }
 
@@ -39,24 +38,33 @@ class index extends Component {
         })
     }
     addNewUser = (values) => {
-        var newUser = {
-            id: values.id,
+        console.log(values)
+        // this.setState({ loading: 'Vui lòng đợi....' });
+        const getToken = localStorage.getItem("ACCESSTOKEN");
+        callApi('admin/user?token='+getToken, 'POST', {
             name: values.name,
-            phone: values.phone
-        }
-        var { users } = this.state;
-        // var index = users.findIndex(obj => obj.id === values.id);
-        this.state.users.push(newUser);
-        this.setState({
-            formAddUser: false,
-            showMessageAddUser: true
+            email: values.email,
+            password: values.password,
+            picture: values.picture.file.name,
+            number_phone: values.number_phone,
+            address: values.address
+        }).then(res => {
+            const account = res.data;
+            console.log(res)
+
+            this.setState({loading: false })
+            // notification.success({
+            //     message: 'Thêm thành công'
+            // });
+        
+        //    window.location.reload();
+
+        }).catch(e => {
+            console.log(e.data)
         })
-        setTimeout(() => {
-            this.setState({
-                showMessageAddUser: false
-            })
-        }, 3000);
+
     }
+   
     confirmDelete = (index) => {
         // alert(id)
         var { users } = this.state;
